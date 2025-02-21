@@ -5,7 +5,8 @@ import "../imports/api/tasksMethods";
 import { Accounts } from "meteor/accounts-base";
 
 const insertTask = (taskText, user) => {
-  TasksCollection.insert({
+  // TasksCollection.insert({
+  TasksCollection.insertAsync({
     text: taskText,
     userID: user._id,
     createdAt: new Date(),
