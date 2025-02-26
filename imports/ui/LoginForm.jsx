@@ -8,7 +8,17 @@ export const LoginForm = () => {
   const submit = (e) => {
     e.preventDefault();
 
-    Meteor.loginWithPassword(username, password);
+    Meteor.loginWithPassword(username, password, (error) => {
+      if (error) {
+        if (error instanceof Meteor.Error) {
+          console.error("Erro ao fazer login:", error.reason);
+        } else {
+          console.error("Erro ao fazer login:", error.message);
+        }
+      } else {
+        console.log("Login bem-sucedido!");
+      }
+    });
   };
 
   return (

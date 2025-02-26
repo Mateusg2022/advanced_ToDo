@@ -5,12 +5,9 @@ import { TaskForm } from "./TaskForm";
 import { Meteor } from "meteor/meteor";
 import { LoginForm } from "./LoginForm";
 import React, { useState, Fragment } from "react";
-//dados para teste antes de conectar ao banco de dados
-// const tasks = [
-//   { _id: 1, text: "First Task" },
-//   { _id: 2, text: "Second Task" },
-//   { _id: 3, text: "Third Task" },
-// ];
+
+import { Routes, Route } from "react-router-dom";
+import { Home } from "./Home";
 
 export const App = () => {
   const user = useTracker(() => Meteor.user());
@@ -98,7 +95,12 @@ export const App = () => {
             </ul>
           </Fragment>
         ) : (
-          <LoginForm />
+          // <LoginForm />
+          <Routes>
+            <Route path="/" element={<Home user={user} />} />{" "}
+            <Route path="/login" element={<LoginForm />} />{" "}
+            <Route path="/home" element={<Home user={user} />} />
+          </Routes>
         )}
       </div>
     </div>

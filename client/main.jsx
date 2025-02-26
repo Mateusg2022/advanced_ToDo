@@ -5,8 +5,14 @@ import { App } from "/imports/ui/App";
 
 import "../imports/api/tasksMethods";
 
+import { BrowserRouter } from "react-router-dom";
+
 Meteor.startup(() => {
   const container = document.getElementById("react-target");
   const root = createRoot(container);
-  root.render(<App />);
+  root.render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
 });
