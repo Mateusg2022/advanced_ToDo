@@ -8,6 +8,9 @@ import React, { useState, Fragment } from "react";
 
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./Home";
+import { TasksPage } from "./TasksPage";
+import { HomePage } from "./HomePage";
+import { Profile } from "./Profile";
 
 export const App = () => {
   const user = useTracker(() => Meteor.user());
@@ -61,8 +64,17 @@ export const App = () => {
         <div className="app-bar">
           <div className="app-header">
             <h1>
-              📝️ To Do list app
-              {pendingTasksTitle}
+              <div className="filter" style={{ textAlign: "center" }}>
+                <button
+                  className="login-form"
+                  type="submit"
+                  onClick={() => window.location.replace("/HomePage")}
+                >
+                  Home Page
+                </button>
+                📝️ To Do list app
+                {pendingTasksTitle}
+              </div>
             </h1>
           </div>
         </div>
@@ -70,37 +82,48 @@ export const App = () => {
 
       <div className="main">
         {user != null ? (
-          <Fragment>
-            <div className="user" onClick={logout}>
-              {user.username} 🚪
-            </div>
+          // <Fragment>
+          //   <div className="user" onClick={logout}>
+          //     {user.username} 🚪
+          //   </div>
 
-            <TaskForm />
+          //   <TaskForm />
 
-            <div className="filter">
-              <button onClick={() => setHideCompleted(!hideCompleted)}>
-                {hideCompleted ? "Show All" : "Hide Completed"}
-              </button>
-            </div>
+          //   <div className="filter">
+          //     <button onClick={() => setHideCompleted(!hideCompleted)}>
+          //       {hideCompleted ? "Show All" : "Hide Completed"}
+          //     </button>
+          //   </div>
 
-            <ul className="tasks">
-              {tasks.map((task) => (
-                <Task
-                  key={task._id}
-                  task={task}
-                  onCheckboxClick={handleToggleChecked}
-                  onDeleteClick={handleDelete}
-                />
-              ))}
-            </ul>
-          </Fragment>
+          //   <ul className="tasks">
+          //     {tasks.map((task) => (
+          //       <Task
+          //         key={task._id}
+          //         task={task}
+          //         onCheckboxClick={handleToggleChecked}
+          //         onDeleteClick={handleDelete}
+          //       />
+          //     ))}
+          //   </ul>
+          // </Fragment>
+          <main>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/taskspage" element={<TasksPage />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          </main>
         ) : (
           // <LoginForm />
-          <Routes>
-            <Route path="/" element={<Home user={user} />} />{" "}
-            <Route path="/login" element={<LoginForm />} />{" "}
-            <Route path="/home" element={<Home user={user} />} />
-          </Routes>
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />{" "}
+              <Route path="/login" element={<LoginForm />} />{" "}
+              <Route path="*" element={<Home />} />
+              {/* <Route path="/home" element={<HomePage user={user} />} /> */}
+            </Routes>
+          </main>
         )}
       </div>
     </div>

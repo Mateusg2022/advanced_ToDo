@@ -17,6 +17,7 @@ export const LoginForm = () => {
         }
       } else {
         console.log("Login bem-sucedido!");
+        window.location.replace("/TasksPage");
       }
     });
   };
