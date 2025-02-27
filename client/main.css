@@ -16,16 +16,16 @@ body {
   font-size: 14px;
 }
 
-button{
+/* button{
   font-family: sans-serif;
   font-weight: bold;
   font-size: 1em;
-  border: none;
+  border: none; 
   color: white;
   box-shadow: 0 3px 3px rgba(34, 25, 25, 0.4);
   padding: 5px;
   cursor: pointer;
-}
+} */
 
 button:focus{
   outline: 0;
@@ -58,13 +58,13 @@ button:focus{
   background: inherit;
 }
 
-header {
+/* header {
   background: #d2edf4;
   background-image: linear-gradient(to bottom, #d0edf5, #e1e5f0 100%);
   padding: 20px 15px 15px 15px;
   position: relative;
   box-shadow: 0 3px 3px rgba(34, 25, 25, 0.4);
-}
+} */
 
 .app-bar {
   display: flex;
@@ -98,11 +98,11 @@ header {
   outline: 0;
 }
 
-.task-form>button {
+/* .task-form>button {
   min-width: 100px;
   height: 95%;
-  background-color: #315481;
-}
+  background-color: #813131;
+} */
 
 .tasks {
   list-style-type: none;
@@ -127,6 +127,19 @@ header {
 .tasks>li>button {
   justify-self: flex-end;
   background-color: #ff3046;
+  margin-left: 16px;
+  height: 25px;
+  width: 25px;
+  border-radius: 10%;
+}
+
+.delete-button {
+  justify-self: flex-end;
+  background-color: #2c2a2a;
+  margin-left: 16px;
+  height: 25px;
+  width: 25px;
+  border-radius: 10%;
 }
 
 .filter {
@@ -134,9 +147,9 @@ header {
   justify-content: center;
 }
 
-.filter>button {
+/* .filter>button {
   background-color: #62807e;
-}
+} */
 
 .login-form {
   display: flex;

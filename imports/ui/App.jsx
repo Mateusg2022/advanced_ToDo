@@ -12,6 +12,8 @@ import { TasksPage } from "./TasksPage";
 import { HomePage } from "./HomePage";
 import { Profile } from "./Profile";
 
+import MenuAppBar from "./MenuAppBar.jsx";
+
 export const App = () => {
   const user = useTracker(() => Meteor.user());
 
@@ -61,7 +63,7 @@ export const App = () => {
   return (
     <div className="app">
       <header>
-        <div className="app-bar">
+        {/* <div className="app-bar">
           <div className="app-header">
             <h1>
               <div className="filter" style={{ textAlign: "center" }}>
@@ -77,7 +79,8 @@ export const App = () => {
               </div>
             </h1>
           </div>
-        </div>
+        </div> */}
+        <MenuAppBar />
       </header>
 
       <div className="main">
@@ -110,7 +113,7 @@ export const App = () => {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/home" element={<HomePage />} />
-              <Route path="/taskspage" element={<TasksPage />} />
+              <Route path="/tasks" element={<TasksPage />} />
               <Route path="/profile" element={<Profile />} />
             </Routes>
           </main>

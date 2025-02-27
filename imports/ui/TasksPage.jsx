@@ -7,15 +7,20 @@ import { Task } from "./Task";
 import { Meteor } from "meteor/meteor";
 import { useState } from "react";
 import { useSubscribe } from "meteor/react-meteor-data";
+import { useSnackbar } from "./SnackbarContext";
+
+import Button from "@mui/material/Button";
+
+import MenuAppBar from "./MenuAppBar";
 
 export const TasksPage = () => {
   const user = useTracker(() => Meteor.user());
+  const { addSnackbarMessage } = useSnackbar();
 
   const [hideCompleted, setHideCompleted] = useState(false);
 
   const hideCompletedFilter = { isChecked: { $ne: true } };
 
-  //o hook useTracker garante que o componente seja re-renderizado sempre que os dados na TasksCollection mudarem
   const tasks = useTracker(() => {
     if (!user) {
       return [];
@@ -25,8 +30,7 @@ export const TasksPage = () => {
       sort: { createdAt: -1 },
     }).fetch();
   });
-  // when subscribing to a publication using useSubscribe you'll get a isLoading function, that you can use
-  // to render some loading component before the data is ready.
+
   const isLoading = useSubscribe("tasks").isLoading;
 
   if (isLoading) {
@@ -50,6 +54,7 @@ export const TasksPage = () => {
 
   const handleDelete = ({ _id }) => {
     Meteor.callAsync("tasks.delete", { _id });
+    addSnackbarMessage("Task Deleted");
   };
 
   const logout = () => Meteor.logout();
@@ -63,14 +68,18 @@ export const TasksPage = () => {
       <TaskForm />
 
       <div className="filter">
-        <button onClick={() => setHideCompleted(!hideCompleted)}>
+        <Button
+          variant="contained"
+          onClick={() => setHideCompleted(!hideCompleted)}
+        >
           {hideCompleted ? "Show All" : "Hide Completed"}
-        </button>
+        </Button>
       </div>
 
       <ul className="tasks">
         {tasks.map((task) => (
           <Task
+            username={user.username}
             key={task._id}
             task={task}
             onCheckboxClick={handleToggleChecked}

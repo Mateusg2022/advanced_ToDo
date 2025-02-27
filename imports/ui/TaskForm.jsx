@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { TasksCollection } from "../api/TasksCollection";
 import "../api/tasksMethods";
+import { useSnackbar } from "./SnackbarContext";
+
+import Button from "@mui/material/Button";
 
 export const TaskForm = () => {
   const [text, setText] = useState("");
+  const { addSnackbarMessage } = useSnackbar();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,6 +20,7 @@ export const TaskForm = () => {
     });
 
     setText("");
+    addSnackbarMessage("Task added successfully");
   };
 
   return (
@@ -26,7 +31,9 @@ export const TaskForm = () => {
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button type="submit">Add Task</button>
+      <Button variant="contained" type="submit">
+        Add Task
+      </Button>
     </form>
   );
 };
