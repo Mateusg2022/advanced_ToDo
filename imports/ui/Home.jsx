@@ -1,31 +1,17 @@
 import React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
+import { useTracker } from "meteor/react-meteor-data";
+import { Meteor } from "meteor/meteor";
 
-export const Home = () => {
-  // return <li>{task.text}</li>;
+export const HomePage = () => {
+  const user = useTracker(() => Meteor.user());
   return (
+    //tela de bem vindo, usuario já logado
     <div>
       <h1>Olá! {user.username}</h1>
-      <p>Para acessar o To Do list app, faça login.</p>
-      {/* <LoginForm /> */}
-      <button
-        onClick={() => window.location.replace("/login")}
-        className="login-form"
-        type="submit"
-      >
-        Login
-      </button>
-
-      <React.Fragment>
-        <CssBaseline />
-        <Container maxWidth="sm">
-          <Box sx={{ bgcolor: "#cfe8fc", padding: 2 }}>
-            <p>Mensagem de teste</p>
-          </Box>
-        </Container>
-      </React.Fragment>
+      <h3>Está é a tela inicial do seu perfil no Todo App List.</h3>
+      <p> - Home </p>
+      <p> - Perfil </p>
+      <p> - Listar tarefas (botão)</p>
     </div>
   );
 };

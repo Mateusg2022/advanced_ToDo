@@ -1,23 +1,35 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
+import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Stack,
+  Button,
+  Menu,
+  MenuItem,
+  Container,
+} from "@mui/material";
+
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link } from "react-router-dom";
+import Tooltip from "@mui/material/Tooltip";
+import Box from "@mui/material/Box";
 
-const pages = ["Home", "Tasks"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { useTracker, useSubscribe } from "meteor/react-meteor-data";
 
-function MenuAppBar() {
+import { useNavigate } from "react-router-dom";
+
+const pages = ["Tasks"];
+const settings = ["Profile", "Tasks", "Logout"];
+
+const MenuAppBar = () => {
+  const user = useTracker(() => Meteor.user());
+
+  const navigate = useNavigate();
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -29,6 +41,7 @@ function MenuAppBar() {
   };
 
   const handleCloseNavMenu = () => {
+    // console.log("click");
     setAnchorElNav(null);
   };
 
@@ -36,16 +49,41 @@ function MenuAppBar() {
     setAnchorElUser(null);
   };
 
-  return (
+  const handleNavMenuClick = (page) => {
+    if (page == "Tasks") {
+      navigate("/tasks");
+    }
+    setAnchorElNav(null);
+  };
+
+  const logout = () => {
+    Meteor.logout();
+    navigate("/login");
+  };
+
+  const profileIconList = (profileIconList) => {
+    //profile, tasks ou logout
+    if (profileIconList == "Profile") {
+      navigate("/profile");
+    } else if (profileIconList == "Tasks") {
+      // console.log("teste");
+      navigate("/tasks");
+    } else {
+      logout();
+    }
+  };
+
+  return user != null ? (
     <AppBar position="static">
+      {/* {testes 2} */}
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
-            component={Link}
-            to="/"
+            component="a"
+            href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -87,53 +125,28 @@ function MenuAppBar() {
               sx={{ display: { xs: "block", md: "none" } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: "center" }}>
-                    <Link to={`/${page.toLowerCase()}`}>{page}</Link>
-                  </Typography>
+                <MenuItem key={page} onClick={() => handleNavMenuClick(page)}>
+                  <Typography sx={{ textAlign: "center" }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleNavMenuClick(page)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                <Link
-                  to={`/${page.toLowerCase()}`}
-                  style={{ color: "white", textDecoration: "none" }}
-                >
-                  {page}
-                </Link>
+                {page}
               </Button>
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar src="/broken-image.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -153,14 +166,12 @@ function MenuAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => profileIconList(setting)}
+                >
                   <Typography sx={{ textAlign: "center" }}>
-                    <Link
-                      to={`/${setting.toLowerCase()}`}
-                      style={{ color: "inherit", textDecoration: "none" }}
-                    >
-                      {setting}
-                    </Link>
+                    {setting}
                   </Typography>
                 </MenuItem>
               ))}
@@ -169,7 +180,58 @@ function MenuAppBar() {
         </Toolbar>
       </Container>
     </AppBar>
+  ) : (
+    <div></div>
   );
+};
+export default MenuAppBar;
+{
+  /* {testes 2} */
 }
 
-export default MenuAppBar;
+{
+  /* {old_one} */
+}
+{
+  /* <Toolbar>
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          To-Do List App
+        </Typography>
+        <Button color="inherit" onClick={logout}>
+          <Avatar sx={{ bgcolor: "lightblue" }} style={{ marginRight: "4px" }}>
+            {user.username[0]}
+          </Avatar>
+        </Button>
+      </Toolbar> */
+}
+{
+  /* {old_one} */
+}
+//  : (
+//   <AppBar position="static">
+//     <Toolbar>
+//       <IconButton
+//         size="large"
+//         edge="start"
+//         color="inherit"
+//         aria-label="menu"
+//         sx={{ mr: 2 }}
+//       >
+//         <MenuIcon />
+//       </IconButton>
+//       <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+//         To-Do List App
+//       </Typography>
+//     </Toolbar>
+//   </AppBar>
+// );</AppBar>
+// );

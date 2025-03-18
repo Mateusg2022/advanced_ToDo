@@ -8,6 +8,7 @@ const insertTask = (taskText, user) => {
   // TasksCollection.insert({
   TasksCollection.insertAsync({
     text: taskText,
+    newDescription: "",
     userID: user._id,
     createdAt: new Date(),
   });

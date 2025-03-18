@@ -8,11 +8,28 @@ Meteor.methods({
       userId: this.userId,
     });
   },
+  // "tasks.toggleChecked"({ _id, isChecked }) {
+  //   return TasksCollection.updateAsync(_id, {
+  //     $set: { isChecked: !isChecked },
+  //   });
+  // },
   "tasks.toggleChecked"({ _id, isChecked }) {
     return TasksCollection.updateAsync(_id, {
-      $set: { isChecked: !isChecked },
+      $set: { isChecked },
     });
   },
+
+  "tasks.update"({ _id, newUser, newText, newDescription, newSituation }) {
+    return TasksCollection.updateAsync(_id, {
+      $set: {
+        user: newUser,
+        text: newText,
+        description: newDescription,
+        situation: newSituation,
+      },
+    });
+  },
+
   "tasks.delete"({ _id }) {
     return TasksCollection.removeAsync(_id);
   },
