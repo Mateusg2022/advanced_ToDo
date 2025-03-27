@@ -60,12 +60,27 @@ export const TasksPage = () => {
   };
 
   const handleEdit = (id) => {
+    let founded = false;
+    tasks.map((task) => {
+      if (task._id === id && task.userId === user._id) {
+        founded = true;
+        navigate(`/edit/${id}`);
+      }
+    });
+    if (!founded) alert("Erro. Essa tarefa pode pertencer a outro usuário.");
     // console.log("cliquei no edit: ", id);
-    navigate(`/edit/${id}`);
+    // navigate(`/edit/${id}`);
   };
 
   const handleDelete = (id) => {
-    Meteor.callAsync("tasks.delete", { _id: id });
+    let founded = false;
+    tasks.map((task) => {
+      if (task._id === id && task.userId === user._id) {
+        founded = true;
+        Meteor.callAsync("tasks.delete", { _id: id });
+      }
+    });
+    if (!founded) alert("Erro. Essa tarefa pode pertencer a outro usuário.");
   };
 
   const handleClick = (id) => {
@@ -77,19 +92,6 @@ export const TasksPage = () => {
   const logout = () => Meteor.logout();
 
   const columns = [
-    // {
-    //   field: "isChecked",
-    //   headerName: "Checkbox",
-    //   width: 90,
-    //   sortable: false,
-    //   disableColumnMenu: true,
-    //   renderCell: (params) => (
-    //     <Checkbox
-    //       checked={params.row.isChecked}
-    //       onChange={() => handleToggleChecked(params.row)}
-    //     />
-    //   ),
-    // },
     {
       field: "iconTask",
       headerName: "",
@@ -174,10 +176,14 @@ export const TasksPage = () => {
             marginLeft: "10px",
             marginTop: "20px",
             display: "flex",
-            justifyContent: "flex-end",
+            justifyContent: "space-between",
             marginRight: "10px",
           }}
         >
+          <h2 style={{ display: "flex", justifyContent: "flex-start" }}>
+            Tarefas
+          </h2>
+          {/*
           <div
             className="filter"
             style={{
@@ -185,7 +191,8 @@ export const TasksPage = () => {
               right: "20px",
             }}
           >
-            {/* <Button
+            
+             <Button
             style={{
               display: "flex",
               alignItems: "center",
@@ -195,8 +202,9 @@ export const TasksPage = () => {
             onClick={() => setHideCompleted(!hideCompleted)}
           >
             {hideCompleted ? "Show All" : "Hide Completed"}
-          </Button> */}
+          </Button> 
           </div>
+          */}
           <Fab
             color="primary"
             aria-label="add"
@@ -206,7 +214,28 @@ export const TasksPage = () => {
             <AddIcon />
           </Fab>
         </Box>
-        {/* <List>
+        <Paper sx={{ height: 400, width: "100%" }}>
+          <DataGrid
+            checkboxSelection={false}
+            disableColumnMenu
+            disableSelectionOnClick
+            rows={rows}
+            columns={columns}
+            initialState={{ pagination: { paginationModel } }}
+            pageSizeOptions={[5, 10, 15, 20]}
+            sx={{ border: 0 }}
+            localeText={{
+              noRowsLabel: "Nenhuma tarefa encontrada.",
+            }}
+          />
+        </Paper>
+        {/** */}
+      </Fragment>
+    </Container>
+  );
+};
+{
+  /* <List>
         {tasks.map((task) => (
           <ListItem
             key={task._id}
@@ -240,25 +269,8 @@ export const TasksPage = () => {
             </div>
           </ListItem>
         ))}
-      </List> */}
-        {/** */}
-        <Paper sx={{ height: 400, width: "100%" }}>
-          <DataGrid
-            checkboxSelection={false}
-            disableColumnMenu
-            disableSelectionOnClick
-            rows={rows}
-            columns={columns}
-            initialState={{ pagination: { paginationModel } }}
-            pageSizeOptions={[5, 10, 15, 20]}
-            sx={{ border: 0 }}
-            localeText={{
-              noRowsLabel: "Nenhuma tarefa encontrada.",
-            }}
-          />
-        </Paper>
-        {/** */}
-      </Fragment>
-    </Container>
-  );
-};
+      </List> */
+}
+{
+  /** */
+}

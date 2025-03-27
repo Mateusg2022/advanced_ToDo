@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // import { TasksCollection } from "../api/TasksCollection";
 import "../api/tasksMethods";
 
-import Button from "@mui/material/Button";
+import { Button, Container } from "@mui/material";
 
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -25,12 +25,18 @@ export const CreateTask = () => {
   const [text, setText] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("Cadastrada");
+  const [restricao, setRestricao] = useState("Aberta");
 
   const user = useTracker(() => Meteor.user());
   const navigate = useNavigate();
 
   const handleStatusChange = (event) => {
     setStatus(event.target.value);
+  };
+
+  const handleRestrictChange = (event) => {
+    if (event.target.value === "Pessoal") setRestricao("Pessoal");
+    else setRestricao("Aberta");
   };
 
   const handleSubmit = async (e) => {
@@ -44,6 +50,7 @@ export const CreateTask = () => {
       //aqui eu posso criar um campo description para a descrião da tarefa e acessa-lo na pagina de ediçao
       description: description.trim(),
       situation: status.trim(),
+      restrict: restricao,
       createdAt: new Date(),
     });
 
@@ -58,62 +65,78 @@ export const CreateTask = () => {
   };
 
   return (
-    <form
-      className="task-form"
-      onSubmit={handleSubmit}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px",
-        marginLeft: "25px",
-      }}
-    >
-      <h2> Criando nova Tarefa </h2>
-      {/**FormControl*/}
-      <FormControl sx={{ width: "150px" }}>
-        <InputLabel id="demo-simple-select-label">Categoria</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={status}
-          label="Categoria"
-          onChange={handleStatusChange}
-        >
-          <MenuItem value="Cadastrada">Cadastrada</MenuItem>
-          <MenuItem value="Em Andamento">Em Andamento</MenuItem>
-          <MenuItem value="Concluída">Concluída</MenuItem>
-        </Select>
-      </FormControl>
-      {/** */}
-      <Divider variant="middle" />
-      {/* <input
+    <Container maxWidth="xl">
+      <form
+        className="task-form"
+        onSubmit={handleSubmit}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+          marginLeft: "25px",
+        }}
+      >
+        <div>
+          <h2> Criando nova Tarefa </h2>
+          {/**FormControl*/}
+          <FormControl sx={{ width: "150px", marginRight: "10px" }}>
+            <InputLabel id="demo-simple-select-label">Categoria</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={status}
+              label="Categoria"
+              onChange={handleStatusChange}
+            >
+              <MenuItem value="Cadastrada">Cadastrada</MenuItem>
+              <MenuItem value="Em Andamento">Em Andamento</MenuItem>
+              <MenuItem value="Concluída">Concluída</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl sx={{ width: "150px" }}>
+            <InputLabel id="demo-simple-select-label">Restrição:</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={restricao}
+              label="Categoria"
+              onChange={handleRestrictChange}
+            >
+              <MenuItem value="Aberta">Aberta</MenuItem>
+              <MenuItem value="Pessoal">Pessoal</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+        {/** */}
+        <Divider variant="middle" />
+        {/* <input
         type="text"
         placeholder="Type to add new tasks"
         value={text}
         onChange={(e) => setText(e.target.value)}
       /> */}
-      <TextField
-        id="outlined-required"
-        type="text"
-        placeholder="Type to add task's title"
-        label="Required"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        required
-        sx={{ width: "700px" }}
-      />
-      <TextField
-        id="outlined-multiline-static"
-        label="Descrição (opicional)"
-        multiline
-        rows={4}
-        // defaultValue="Type to add a task's description"
-        placeholder="Type to add a task's description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        sx={{ width: "700px" }}
-      />
-      {/* <TextField
+        <TextField
+          id="outlined-required"
+          type="text"
+          placeholder="Type to add task's title"
+          label="Required"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          required
+          sx={{ width: "700px" }}
+        />
+        <TextField
+          id="outlined-multiline-static"
+          label="Descrição (opicional)"
+          multiline
+          rows={4}
+          // defaultValue="Type to add a task's description"
+          placeholder="Type to add a task's description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          sx={{ width: "700px" }}
+        />
+        {/* <TextField
         id="outlined"
         type="text"
         placeholder="Type to add a task's description "
@@ -122,12 +145,13 @@ export const CreateTask = () => {
         onChange={(e) => setDescription(e.target.value)}
       /> */}
 
-      <Button variant="contained" type="submit" sx={{ width: "150px" }}>
-        Add new task
-      </Button>
-      <Button size="small" onClick={handleClick} sx={{ width: "150px" }}>
-        Cancel
-      </Button>
-    </form>
+        <Button variant="contained" type="submit" sx={{ width: "150px" }}>
+          Add new task
+        </Button>
+        <Button size="small" onClick={handleClick} sx={{ width: "150px" }}>
+          Cancel
+        </Button>
+      </form>
+    </Container>
   );
 };

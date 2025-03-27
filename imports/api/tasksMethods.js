@@ -19,13 +19,21 @@ Meteor.methods({
     });
   },
 
-  "tasks.update"({ _id, newUser, newText, newDescription, newSituation }) {
+  "tasks.update"({
+    _id,
+    newUser,
+    newText,
+    newDescription,
+    newSituation,
+    newRestrict,
+  }) {
     return TasksCollection.updateAsync(_id, {
       $set: {
         user: newUser,
         text: newText,
         description: newDescription,
         situation: newSituation,
+        restrict: newRestrict,
       },
     });
   },

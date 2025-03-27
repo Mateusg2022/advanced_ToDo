@@ -2,6 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { TasksCollection } from "/imports/api/TasksCollection";
 import "../imports/api/TasksPublications";
 import "../imports/api/tasksMethods";
+import "../imports/api/UserMethods";
 import { Accounts } from "meteor/accounts-base";
 
 const insertTask = (taskText, user) => {
@@ -40,3 +41,8 @@ Meteor.startup(async () => {
   }
   // insertTask("teste");
 });
+
+// Meteor.publish("nome", function () {
+//   //primeiro parametro: filtro  |  segundo parametro:
+//   return TasksCollection.find({}, {});
+// });

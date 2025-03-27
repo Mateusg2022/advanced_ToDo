@@ -14,6 +14,10 @@ import { EditTask } from "./EditTask";
 import { ViewTask } from "./ViewTask";
 import { CreateTask } from "./CreateTask";
 import MenuAppBar from "./MenuAppBar.jsx";
+import { EditProfile } from "./EditProfile";
+import { HomePage } from "./Home";
+import ProfilePic from "./ProfilePic";
+
 import { Container, Typography } from "@mui/material";
 
 import PrivateRoute from "./PrivateRoute";
@@ -52,7 +56,7 @@ export const App = () => {
                 path="/"
                 element={
                   <PrivateRoute>
-                    <Profile />
+                    <HomePage />
                   </PrivateRoute>
                 }
               />
@@ -61,6 +65,22 @@ export const App = () => {
                 element={
                   <PrivateRoute>
                     <Profile />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/editprofile"
+                element={
+                  <PrivateRoute>
+                    <EditProfile />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/home"
+                element={
+                  <PrivateRoute>
+                    <HomePage />
                   </PrivateRoute>
                 }
               />
@@ -93,6 +113,14 @@ export const App = () => {
                 element={
                   <PrivateRoute>
                     <CreateTask />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/changephoto"
+                element={
+                  <PrivateRoute>
+                    <ProfilePic />
                   </PrivateRoute>
                 }
               />

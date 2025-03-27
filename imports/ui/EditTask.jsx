@@ -35,6 +35,7 @@ export const EditTask = () => {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("Cadastrada");
   const [errorMessage, setErrorMessage] = useState("");
+  const [restricao, setRestricao] = useState("Aberta");
 
   const task = useTracker(() => TasksCollection.findOne({ _id: id }), [id]);
 
@@ -45,6 +46,7 @@ export const EditTask = () => {
       setText(task.text);
       setDescription(task.description);
       setStatus(task.situation || "Cadastrada");
+      setRestricao(task.restrict);
     }
   }, [task]);
 
@@ -74,6 +76,11 @@ export const EditTask = () => {
     setStatus(newStatus);
   };
 
+  const handleRestrictChange = (event) => {
+    if (event.target.value == "Pessoal") setRestricao("Pessoal");
+    else setRestricao("Aberta");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -95,6 +102,7 @@ export const EditTask = () => {
       newText: text.trim(),
       newDescription: description.trim(),
       newSituation: status,
+      newRestrict: restricao,
     });
 
     setText("");
@@ -129,24 +137,45 @@ export const EditTask = () => {
             marginLeft: "25px",
           }}
         >
-          <h2> Edição </h2>
-          {/**FormControl*/}
-          <FormControl sx={{ width: "150px" }} error={!!errorMessage}>
-            <InputLabel id="demo-simple-select-label">Categoria</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={status}
-              label="Categoria"
-              onChange={handleStatusChange}
-              renderValue={(value) => (errorMessage ? `⚠️  - ${value}` : value)}
+          <div>
+            <h2> Edição </h2>
+            {/**FormControl*/}
+            <FormControl
+              sx={{ width: "150px", marginRight: "10px" }}
+              error={!!errorMessage}
             >
-              <MenuItem value="Cadastrada">Cadastrada</MenuItem>
-              <MenuItem value="Em Andamento">Em Andamento</MenuItem>
-              <MenuItem value="Concluída">Concluída</MenuItem>
-            </Select>
-            {errorMessage && <FormHelperText>{errorMessage}</FormHelperText>}
-          </FormControl>
+              <InputLabel id="demo-simple-select-label">Categoria</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={status}
+                label="Categoria"
+                onChange={handleStatusChange}
+                renderValue={(value) =>
+                  errorMessage ? `⚠️  - ${value}` : value
+                }
+              >
+                <MenuItem value="Cadastrada">Cadastrada</MenuItem>
+                <MenuItem value="Em Andamento">Em Andamento</MenuItem>
+                <MenuItem value="Concluída">Concluída</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl sx={{ width: "150px" }}>
+              <InputLabel id="demo-simple-select-label">Restrição:</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={restricao}
+                label="Categoria"
+                onChange={handleRestrictChange}
+              >
+                <MenuItem value="Aberta">Aberta</MenuItem>
+                <MenuItem value="Pessoal">Pessoal</MenuItem>
+              </Select>
+
+              {errorMessage && <FormHelperText>{errorMessage}</FormHelperText>}
+            </FormControl>
+          </div>
           {/** */}
           <Divider variant="middle" style={{ width: "670px" }} />
           <TextField
@@ -177,11 +206,7 @@ export const EditTask = () => {
           <Button variant="contained" type="submit" sx={{ width: "120px" }}>
             Edit Task
           </Button>
-          <Button
-            variant="contained"
-            onClick={handleClick}
-            sx={{ width: "120px" }}
-          >
+          <Button size="small" onClick={handleClick} sx={{ width: "120px" }}>
             Cancelar
           </Button>
         </form>

@@ -66,39 +66,47 @@ export const ViewTask = () => {
 
   return (
     <Container maxWidth="xl">
-      <Fragment>
-        <Box sx={{ minWidth: 275 }}>
-          <Card variant="outlined">
-            <CardContent>
-              <Typography
-                gutterBottom
-                sx={{ color: "text.secondary", fontSize: 14 }}
-              >
-                Criada por {user} em: {date}
-              </Typography>
-              <Typography variant="h5" component="div">
-                {text}
+      <Container
+        maxWidth="lg"
+        sx={{
+          marginTop: "35px",
+          marginBottom: "35px",
+        }}
+      >
+        <Fragment>
+          <Box sx={{ minWidth: 275 }}>
+            <Card variant="outlined">
+              <CardContent>
+                <Typography
+                  gutterBottom
+                  sx={{ color: "text.secondary", fontSize: 14 }}
+                >
+                  Criada por {user} em: {date}
+                </Typography>
+                <Typography variant="h5" component="div">
+                  {text}
+                  <br />
+                </Typography>
+                <Typography sx={{ color: "text.secondary", marginTop: "10px" }}>
+                  {status}
+                  <br />
+                  <Divider variant="middle" />
+                </Typography>
                 <br />
-              </Typography>
-              <Typography sx={{ color: "text.secondary", marginTop: "10px" }}>
-                {status}
-                <br />
-                <Divider variant="middle" />
-              </Typography>
-              <br />
-              <Typography variant="body2">{description}</Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small" onClick={() => handleEdit(task)}>
-                Edit
-              </Button>
-              <Button size="small" onClick={handleClick}>
-                Back to Tasks
-              </Button>
-            </CardActions>
-          </Card>
-        </Box>
-      </Fragment>
+                <Typography variant="body2">{description}</Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" onClick={() => handleEdit(task)}>
+                  Edit
+                </Button>
+                <Button size="small" onClick={handleClick}>
+                  Back to Tasks
+                </Button>
+              </CardActions>
+            </Card>
+          </Box>
+        </Fragment>
+      </Container>
     </Container>
   );
 };
