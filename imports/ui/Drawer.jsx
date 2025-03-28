@@ -21,6 +21,7 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 import { useNavigate } from "react-router-dom";
 
+//drawer da MUI
 function HomeIcon(props) {
   return (
     <SvgIcon {...props}>
@@ -39,11 +40,11 @@ export default function TemporaryDrawer() {
   };
 
   const handleClick = (text) => {
-    if (text === "Home") {
+    if (text === "Início") {
       navigate("/home");
     } else if (text === "Tarefas") {
       navigate("/tasks");
-    } else if (text === "Profile") {
+    } else if (text === "Perfil") {
       navigate("/profile");
     }
     setOpen(false);
@@ -52,11 +53,11 @@ export default function TemporaryDrawer() {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
-        {["Home", "Profile", "Tarefas"].map((text) => (
+        {["Início", "Perfil", "Tarefas"].map((text) => (
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={() => handleClick(text)}>
               <ListItemIcon>
-                {text === "Home" ? (
+                {text === "Início" ? (
                   <HomeIcon />
                 ) : text === "Tarefas" ? (
                   <AssignmentIcon />

@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 
 import TemporaryDrawer from "./Drawer";
 
-const settings = ["Profile", "Tasks", "Logout"];
+const settings = ["Perfil", "Tarefas", "Sair"];
 
 const MenuAppBar = () => {
   const user = useTracker(() => Meteor.user());
@@ -44,9 +44,9 @@ const MenuAppBar = () => {
   };
 
   const profileIconList = (profileIconList) => {
-    if (profileIconList === "Profile") {
+    if (profileIconList === "Perfil") {
       navigate("/profile");
-    } else if (profileIconList === "Tasks") {
+    } else if (profileIconList === "Tarefas") {
       navigate("/tasks");
     } else {
       logout();
@@ -91,10 +91,10 @@ const MenuAppBar = () => {
 
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {user.profile.photo === null ? (
+                {user.profile?.photo === undefined ? (
                   <Avatar alt="Profile Picture">{user.username[0]}</Avatar>
                 ) : (
-                  <Avatar alt="Profile Picture" src={user.profile.photo} />
+                  <Avatar alt="Profile Picture" src={user.profile?.photo} />
                 )}
               </IconButton>
             </Tooltip>

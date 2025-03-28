@@ -1,6 +1,5 @@
 import { useTracker, useSubscribe } from "meteor/react-meteor-data";
 import { TasksCollection } from "../api/TasksCollection.js";
-import { TaskForm } from "./TaskForm";
 import { Meteor } from "meteor/meteor";
 import { LoginForm } from "./LoginForm";
 import React, { useState, Fragment } from "react";
@@ -17,7 +16,8 @@ import MenuAppBar from "./MenuAppBar.jsx";
 import { EditProfile } from "./EditProfile";
 import { HomePage } from "./Home";
 import ProfilePic from "./ProfilePic";
-
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 import { Container, Typography } from "@mui/material";
 
 import PrivateRoute from "./PrivateRoute";
@@ -31,7 +31,11 @@ export const App = () => {
   const isLoading = useSubscribe("tasks").isLoading;
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Box sx={{ display: "flex" }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   const user = useTracker(() => Meteor.user());
@@ -132,41 +136,3 @@ export const App = () => {
     // </Container>
   );
 };
-
-// const user = useTracker(() => Meteor.user());
-
-// const [hideCompleted, setHideCompleted] = useState(false);
-
-// const hideCompletedFilter = { isChecked: { $ne: true } };
-
-// //o hook useTracker garante que o componente seja re-renderizado sempre que os dados na TasksCollection mudarem
-// const tasks = useTracker(() => {
-//   if (!user) {
-//     return [];
-//   }
-
-//   return TasksCollection.find(hideCompleted ? hideCompletedFilter : {}, {
-//     sort: { createdAt: -1 },
-//   }).fetch();
-// });
-
-// const pendingTasksCount = useTracker(() => {
-//   if (!user) {
-//     return 0;
-//   }
-//   return TasksCollection.find(hideCompletedFilter).count();
-// });
-
-// const pendingTasksTitle = `${
-//   pendingTasksCount ? ` (${pendingTasksCount})` : ""
-// }`;
-
-// const handleToggleChecked = ({ _id, isChecked }) => {
-//   Meteor.callAsync("tasks.toggleChecked", { _id, isChecked });
-// };
-
-// const handleDelete = ({ _id }) => {
-//   Meteor.callAsync("tasks.delete", { _id });
-// };
-
-// const logout = () => Meteor.logout();

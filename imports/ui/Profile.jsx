@@ -1,52 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTracker } from "meteor/react-meteor-data";
 import { Meteor } from "meteor/meteor";
-import { Container, Button } from "@mui/material";
-
-import { TextField, Card, CardContent, Typography } from "@mui/material";
-
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-import { styled } from "@mui/material/styles";
+import {
+  Container,
+  Button,
+  Typography,
+  Card,
+  CardContent,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  Avatar,
+  Box,
+  ButtonGroup,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-// Accounts.createUser(
-//       {
-//         username,
-//         email,
-//         password,
-//         profile: {
-//           birthdate: birthdate,
-//           gender: gender,
-//           enterprise: enterprise,
-//         },
-//       },
-
-const style = {
-  py: 0,
-  width: "100%",
-  maxWidth: 360,
-  borderRadius: 2,
-  border: "1px solid",
-  borderColor: "divider",
-  backgroundColor: "background.paper",
-};
-
-const Div = styled("div")(({ theme }) => ({
-  ...theme.typography.button,
-  backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(1),
-}));
+import CircularProgress from "@mui/material/CircularProgress";
 
 export const Profile = () => {
   const user = useTracker(() => Meteor.user());
-
-  if (!user) return <Typography>Carregando...</Typography>;
-
   const navigate = useNavigate();
 
-  const handleImageInput = (event) => {};
+  if (!user) {
+    return (
+      <Box sx={{ display: "flex" }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   const handleEditProfile = () => {
     navigate("/editprofile");
@@ -57,60 +39,67 @@ export const Profile = () => {
   };
 
   return (
-    <Container>
-      <div>
-        <Typography>
-          Olá, {typeof user.username === "string" ? user.username : "Usuário"} !
+    <Container maxWidth="sm" sx={{ mt: 4 }}>
+      <Card sx={{ p: 3, textAlign: "center", borderRadius: 4, boxShadow: 3 }}>
+        <Avatar
+          alt="Profile Picture"
+          sx={{ width: 80, height: 80, mx: "auto", mb: 2 }}
+          src={user.profile?.photo}
+        />
+        <Typography variant="h5" fontWeight="bold">
+          Olá, {user.username || "Usuário"}!
         </Typography>
-        <Div style={{ marginBottom: "20px" }}>
-          {`Este é o seu Perfil no To Do list app. :)`}{" "}
-        </Div>
+        <Typography color="text.secondary" sx={{ mb: 2 }}>
+          Este é o seu perfil no To-Do List App.
+        </Typography>
 
-        <List sx={style}>
+        <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+          <Divider />
           <ListItem>
-            <ListItemText primary={`- Usuário: ${user.username}`} />
+            <ListItemText primary="Usuário" secondary={user.username} />
           </ListItem>
-          <Divider variant="middle" component="li" />
-          <ListItem>
-            <ListItemText primary={`- E-mail: ${user.emails?.[0]?.address} `} />
-          </ListItem>
-          <Divider variant="middle" component="li" />
+          <Divider />
           <ListItem>
             <ListItemText
-              primary={`- Data de nascimento: ${user.profile?.birthdate}`}
+              primary="E-mail"
+              secondary={user.emails?.[0]?.address || "Não informado"}
             />
           </ListItem>
-          <Divider variant="middle" component="li" />
+          <Divider />
           <ListItem>
-            <ListItemText primary={`- Sexo: ${user.profile?.gender}`} />
+            <ListItemText
+              primary="Data de nascimento"
+              secondary={user.profile?.birthdate || "Não informado"}
+            />
           </ListItem>
-          <Divider variant="middle" component="li" />
+          <Divider />
           <ListItem>
-            <ListItemText primary={`- Empresa: ${user.profile?.enterprise}`} />
+            <ListItemText
+              primary="Sexo"
+              secondary={user.profile?.gender || "Não informado"}
+            />
           </ListItem>
+          <Divider />
+          <ListItem>
+            <ListItemText
+              primary="Empresa"
+              secondary={user.profile?.enterprise || "Não informado"}
+            />
+          </ListItem>
+          <Divider />
         </List>
-        <Button
-          onClick={handleEditProfile}
-          color="primary"
-          style={{ marginTop: "20px", marginRight: "10px" }}
-        >
-          Editar perfil
-        </Button>
-        <Button
-          onClick={handleChangePhoto}
-          color="primary"
-          style={{ marginTop: "20px" }}
-        >
-          Mudar Foto de perfil
-        </Button>
-        {/* <input
-          type="file"
-          accept="image/png, image/jpeg"
-          className="profile_photo"
-          onChange={handleImageInput}
-        />
-        <span className="photo_"></span> */}
-      </div>
+
+        <Box sx={{ mt: 3 }}>
+          <ButtonGroup fullWidth>
+            <Button onClick={handleEditProfile} variant="contained">
+              Editar Perfil
+            </Button>
+            <Button onClick={handleChangePhoto} /*color="secondary"*/>
+              Mudar Foto
+            </Button>
+          </ButtonGroup>
+        </Box>
+      </Card>
     </Container>
   );
 };

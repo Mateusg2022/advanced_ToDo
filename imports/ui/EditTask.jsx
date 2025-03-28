@@ -6,6 +6,7 @@ import { TasksCollection } from "../api/TasksCollection";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Container } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 //useParams é um hook para conseguir acessar um valor de parametro da url. Em App.jsx, o caminho esta como Edit/:id
 import { useParams } from "react-router-dom";
@@ -109,7 +110,11 @@ export const EditTask = () => {
     setDescription("");
 
     if (!task) {
-      return <div>Loading...</div>;
+      return (
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress />
+        </Box>
+      );
     }
 
     navigate("/tasks");
@@ -214,32 +219,3 @@ export const EditTask = () => {
     </Container>
   );
 };
-
-{
-  /**
-  <FormControl>
-        <FormLabel id="demo-radio-buttons-group-label">Situação</FormLabel>
-        <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          value={status}
-          name="radio-buttons-group"
-          onChange={handleStatusChange}
-        >
-          <FormControlLabel
-            value="Cadastrada"
-            control={<Radio />}
-            label="Cadastrada"
-          />
-          <FormControlLabel
-            value="Em Andamento"
-            control={<Radio />}
-            label="Em Andamento"
-          />
-          <FormControlLabel
-            value="Concluída"
-            control={<Radio />}
-            label="Concluída"
-          />
-        </RadioGroup>
-      </FormControl> */
-}

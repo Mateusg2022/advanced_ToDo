@@ -44,17 +44,23 @@ export const HomePage = () => {
     const cadastradas = tasks.filter(
       (task) =>
         (task.situation === "Cadastrada" && task.restrict === "Aberta") ||
-        (user._id === task.userId && task.situation === "Aberta")
+        (user._id === task.userId &&
+          task.restrict === "Pessoal" &&
+          task.situation === "Cadastrada")
     ).length;
     const andamento = tasks.filter(
       (task) =>
         (task.situation === "Em Andamento" && task.restrict === "Aberta") ||
-        (user._id === task.userId && task.situation === "Em Andamento")
+        (user._id === task.userId &&
+          task.restrict === "Pessoal" &&
+          task.situation === "Em Andamento")
     ).length;
     const concluidas = tasks.filter(
       (task) =>
         (task.situation === "Concluída" && task.restrict === "Aberta") ||
-        (user._id === task.userId && task.situation === "Concluída")
+        (user._id === task.userId &&
+          task.restrict === "Pessoal" &&
+          task.situation === "Concluída")
     ).length;
     setCountCadastradas(cadastradas);
     setCountAndamento(andamento);
@@ -73,39 +79,10 @@ export const HomePage = () => {
       <div>
         <h1>
           {/* Olá! {String(user.username)} */}
-          Olá! {`${user.username}`}
+          Olá, {`${user.username} !`}
         </h1>
         <h3>Bem vindo(a) ao Todo App List.</h3>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {/* <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2} columns={24}>
-              <Grid size={8}>
-                <h2>
-                  <Item>Total de tarefas cadastradas: ${countCadastradas}</Item>
-                </h2>
-              </Grid>
-              <Grid container size={16}>
-                <Grid size={12}>
-                  <h2>
-                    <Item>Total de tarefas concluídas: {countConcluidas} </Item>
-                  </h2>
-                </Grid>
-              </Grid>
-              <Grid size={8}>
-                <Item>
-                  <h2>Total de tarefas a serem concluídas: {countAndamento}</h2>
-                </Item>
-              </Grid>
-              <Grid container columns={12} size={16}>
-                <Grid size={6}>
-                  <Item>
-                    <h2>Visualizar Tarefas</h2>
-                  </Item>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Box> */}
-
           <Grid
             container
             spacing={{ xs: 2, md: 3 }}
@@ -126,9 +103,6 @@ export const HomePage = () => {
             ))}
           </Grid>
         </div>
-
-        {/*D:\ArquivosVSCODE\Synergia\treinamento\2fase\Todo_list\simple-todos-react\public\images*/}
-        {/**/}
       </div>
     </Container>
   );

@@ -10,8 +10,6 @@ import { Button, Container } from "@mui/material";
 //useParams é um hook para conseguir acessar um valor de parametro da url. Em App.jsx, o caminho esta como Edit/:id
 import { useParams } from "react-router-dom";
 
-import Box from "@mui/material/Box";
-
 import Alert from "@mui/material/Alert";
 
 import TextField from "@mui/material/TextField";
@@ -26,6 +24,9 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 export const ViewTask = () => {
   const { id } = useParams();
@@ -61,7 +62,11 @@ export const ViewTask = () => {
   }, [task]);
 
   if (!task) {
-    return <div>Loading...</div>;
+    return (
+      <Box sx={{ display: "flex" }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (

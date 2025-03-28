@@ -42,19 +42,10 @@ export const EditProfile = () => {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setUsername(user.username || "");
-  //     setEmail(user.emails?.[0]?.address || "");
-  //     setBirthdate(user.profile?.birthdate || "");
-  //     setGender(user.profile?.gender || "");
-  //     setEnterprise(user.profile?.enterprise || "");
-  //   }
-  // }, [user]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    //estrutura das informacoes do user
     // await Meteor.callAsync("user.updateInfo", {
     //   newUsername: username.trim(),
     //   newEmail: email.trim(),
@@ -158,32 +149,3 @@ export const EditProfile = () => {
     </Container>
   );
 };
-
-{
-  /**
-  <FormControl>
-        <FormLabel id="demo-radio-buttons-group-label">Situação</FormLabel>
-        <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          value={status}
-          name="radio-buttons-group"
-          onChange={handleStatusChange}
-        >
-          <FormControlLabel
-            value="Cadastrada"
-            control={<Radio />}
-            label="Cadastrada"
-          />
-          <FormControlLabel
-            value="Em Andamento"
-            control={<Radio />}
-            label="Em Andamento"
-          />
-          <FormControlLabel
-            value="Concluída"
-            control={<Radio />}
-            label="Concluída"
-          />
-        </RadioGroup>
-      </FormControl> */
-}
