@@ -54,12 +54,12 @@ $ cd advanced_ToDo
 npm install
 ```
 
-5. Rode a aplicação:
+3. Rode a aplicação:
 ```Meteor run```
 
-6.
+4. Acesse http://localhost:3000 no seu navegador.
 ```
-Navegue para o seu localhost digitando http://localhost:3000 no navegador.
+http://localhost:3000
 ```
 
 ## Project Structure
