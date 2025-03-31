@@ -9,27 +9,8 @@ Desenvolvimento de uma aplicação utilizando React (18.2.0) e Meteor (3.1.2), a
 
 Tarefas são compartilhadas entre usuários, se essa permissão for concedida pelo criador da task em questão, assim, permitindo uma dinâmica entre grupos parecida com a metodologia do quadro Kanban.
 
-### Dependencies
-```
-"dependencies": {
-    "@babel/runtime": "^7.20.7",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^6.4.7",
-    "@mui/material": "^6.4.7",
-    "@mui/x-data-grid": "^7.27.3",
-    "@mui/x-date-pickers": "^7.28.0",
-    "@toolpad/core": "^0.13.0",
-    "bcrypt": "^5.1.1",
-    "dayjs": "^1.11.13",
-    "meteor-node-stubs": "^1.2.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.3.1",
-    "react-router": "^7.3.0",
-    "react-router-dom": "^6.3.0"
-  },
-```
-Dependências
+### Dependências
+
 Algumas das bibliotecas utilizadas estão listadas a seguir:
 
 React: ```^18.2.0```
@@ -39,7 +20,8 @@ React DOM: ```^18.3.1```
 React Router: ```^7.3.0```
 
 MUI (Material-UI): ```@mui/material ^6.4.7```, ```@mui/icons-material ^6.4.7```, ```@mui/x-data-grid ^7.27.3```, ```@mui/x-date-pickers ^7.28.0```
-Meteor Node Stubs: ````^1.2.5```
+
+Meteor Node Stubs: ```^1.2.5```
 
 
 ## Quick Start
@@ -51,11 +33,13 @@ $ cd advanced_ToDo
 ```
 2. Instale as dependências:
 ```
-npm install
+$ npm install
 ```
 
 3. Rode a aplicação:
-```Meteor run```
+```
+$ Meteor run
+```
 
 4. Acesse http://localhost:3000 no seu navegador.
 ```
