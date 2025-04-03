@@ -46,6 +46,9 @@ $ Meteor run
 http://localhost:3000
 ```
 
+```login: Meteorite```
+```senha: password```
+
 ## Project Structure
 ```
 advanced_ToDo/
